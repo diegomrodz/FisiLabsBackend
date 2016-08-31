@@ -18,3 +18,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group([
+	'prefix' => 'admin',
+	'namespace' => 'Admin'
+], function () {
+
+	Route::get('/', 'DashboardController');
+	Route::get('/users', 'UsersController');
+	Route::get('/classrooms', 'ClassroomsController');
+	Route::get('/experiments', 'ExperimentsController');
+	Route::get('/samples', 'SamplesController');
+	Route::get('/oauth', 'OAuthController');
+
+});
