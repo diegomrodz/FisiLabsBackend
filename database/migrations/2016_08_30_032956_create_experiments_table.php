@@ -15,6 +15,18 @@ class CreateExperimentsTable extends Migration
     {
         Schema::create('experiments', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->unsignedInteger('creator_id')->nullable(false);
+            $table->unsignedInteger('classroom_id')->nullable(false);
+
+            $table->string('name')->nullable(false);
+            $table->text('description')->nullable(true);
+
+            $table->string('measure_device')->nullable(false);
+            $table->double('scale_error')->nullable(false);
+            $table->unsignedInteger('sig_figures')->nullable(false);
+            $table->string('unit')->nullable(false);
+
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInstructorsTable extends Migration
+class UsersType extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateInstructorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('instructors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('type')->default('user');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateInstructorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('instructors');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('type');
+        });
     }
 }

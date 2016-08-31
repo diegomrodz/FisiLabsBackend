@@ -15,6 +15,12 @@ class CreateSamplesTable extends Migration
     {
         Schema::create('samples', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->unsignedInteger('experiment_id')->nullable(false);
+            $table->unsignedInteger('user_id')->nullable(false);
+            
+            $table->double('value')->nullable(false);
+
             $table->timestamps();
         });
     }
