@@ -2,6 +2,9 @@
 
 namespace FisiLabs\Http\Controllers\Auth;
 
+use Auth;
+
+use Illuminate\Http\Request;
 use FisiLabs\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -25,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -35,5 +38,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    public function apiLogin(Request $request) 
+    {
+        if (Auth::attempt([
+            "email" => $request->email,
+            "password" => $request->password
+        ])) 
+        {
+            $user = Auth::user();
+
+            $token = $user->createToken($user->email . ' personal token.')->accessToken;
+
+            return [
+                "user"  => $user,
+                "token" => $token
+            ];
+        }
+        
+        return response()->json("Error", 500);
     }
 }

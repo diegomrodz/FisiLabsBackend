@@ -21,6 +21,7 @@ class CreateSamplesTable extends Migration
             
             $table->double('value')->nullable(false);
 
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

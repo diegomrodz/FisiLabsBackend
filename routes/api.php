@@ -16,3 +16,25 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+
+Route::group([
+	'namespace'  => 'Api',
+	'prefix' 	 => 'classroom',
+	'middleware' => 'auth:api'
+], function () {
+
+	Route::get('/list', 'ClassroomController@getList');
+	Route::get('/detail/{id}', 'ClassroomController@getDetail');
+
+});
+
+Route::group([
+	'namespace'  => 'Api',
+	'prefix' 	 => 'experiment',
+	'middleware' => 'auth:api'
+], function () {
+
+	Route::get('/detail/{id}', 'ExperimentController@getDetail');
+
+});

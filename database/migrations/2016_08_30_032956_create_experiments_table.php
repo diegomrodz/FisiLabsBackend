@@ -26,7 +26,15 @@ class CreateExperimentsTable extends Migration
             $table->double('scale_error')->nullable(false);
             $table->unsignedInteger('sig_figures')->nullable(false);
             $table->string('unit')->nullable(false);
+            $table->string('unit_name')->nullable(false);
 
+            $table->double('average')->nullable(true);
+            $table->double('quadratic_average_deviation')->nullable(true);
+            $table->double('standard_deviation')->nullable(true);
+            $table->double('sistematic_error')->nullable(true);
+            $table->double('total_error')->nullable(true);
+
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

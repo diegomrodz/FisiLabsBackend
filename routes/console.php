@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Inspiring;
+use FisiLabs\Experiment;
+use FisiLabs\Events\SampleWasCreated;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,10 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 });
+
+Artisan::command('calc:all', function () {
+	foreach (Experiment::get() as $experiment) 
+	{
+		event(new SampleWasCreated($experiment));
+	}
+})->describe('Calculates the error for all experiment at the application');

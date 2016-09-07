@@ -6,6 +6,7 @@ use FisiLabs\User;
 use FisiLabs\Experiment;
 use FisiLabs\Classroom;
 use FisiLabs\Sample;
+use FisiLabs\Subscription;
 
 class DummyDataSeeder extends Seeder
 {
@@ -77,6 +78,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.05,
 						"sig_figure" => 3,
 						"unit" => "s",
+						"unit_name" => "Metros",
 
 						"samples" => [
 							[
@@ -112,6 +114,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.5,
 						"sig_figure" => 4,
 						"unit" => "m",
+						"unit_name" => "Metros",
 
 						"samples" => [
 							[
@@ -156,6 +159,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.05,
 						"sig_figure" => 3,
 						"unit" => "s",
+						"unit_name" => "Segundos",
 
 						"samples" => [
 							[
@@ -191,6 +195,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.5,
 						"sig_figure" => 4,
 						"unit" => "m",
+						"unit_name" => "Metros",
 
 						"samples" => [
 							[
@@ -243,6 +248,8 @@ class DummyDataSeeder extends Seeder
         	]);
         }
 
+        $students = User::where('type', 'user')->get();
+
         foreach ($this->data["classroms"] as $_classrom) 
         {
         	$instructor = User::where('email', $_classrom['instructor'])->first();
@@ -252,6 +259,15 @@ class DummyDataSeeder extends Seeder
         		"name" => $_classrom["name"],
         		"description" => $_classrom["description"]
         	]);
+
+
+        	foreach ($students as $student) 
+        	{
+				Subscription::create([
+					"classroom_id" 	=> $classrom->id,
+					"user_id"		=> $student->id
+				]);        		
+        	}
 
         	foreach ($_classrom["experiments"] as $_experiment) 
         	{
@@ -263,7 +279,8 @@ class DummyDataSeeder extends Seeder
         			"measure_device" => $_experiment["measure_device"],
         			"scale_error" => $_experiment["scale_error"],
         			"sig_figures" => $_experiment["sig_figure"],
-        			"unit" => $_experiment["unit"]
+        			"unit" => $_experiment["unit"],
+        			"unit_name" => $_experiment["unit_name"]
         		]);
 
         		foreach ($_experiment["samples"] as $_sample) 
