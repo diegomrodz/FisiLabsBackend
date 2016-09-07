@@ -78,7 +78,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.05,
 						"sig_figure" => 3,
 						"unit" => "s",
-						"unit_name" => "Metros",
+						"unit_name" => "Segundos",
 
 						"samples" => [
 							[
@@ -110,7 +110,7 @@ class DummyDataSeeder extends Seeder
 					[
 						"name" => "Experimento B",
 						"desc" => "Experimento para testar aplicação",
-						"measure_device" => "Cronometro",
+						"measure_device" => "Régua",
 						"scale_error" => 0.5,
 						"sig_figure" => 4,
 						"unit" => "m",
@@ -191,7 +191,7 @@ class DummyDataSeeder extends Seeder
 					[
 						"name" => "Experimento B",
 						"desc" => "Experimento para testar aplicação",
-						"measure_device" => "Cronometro",
+						"measure_device" => "Fita Métrica",
 						"scale_error" => 0.5,
 						"sig_figure" => 4,
 						"unit" => "m",

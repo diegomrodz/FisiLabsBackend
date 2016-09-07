@@ -26,6 +26,7 @@ Route::group([
 
 	Route::get('/list', 'ClassroomController@getList');
 	Route::get('/detail/{id}', 'ClassroomController@getDetail');
+	Route::get('/subscribe/{id}', 'ClassroomController@getSubscribe');
 
 });
 
@@ -36,5 +37,6 @@ Route::group([
 ], function () {
 
 	Route::get('/detail/{id}', 'ExperimentController@getDetail');
+	Route::post('/sample/{id}/create', 'ExperimentController@postCreateSample');
 
 });

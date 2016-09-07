@@ -67,4 +67,18 @@ class ClassroomController extends Controller
 		return $classroom;
 	}
 
+	public function getSubscribe($id) 
+	{
+		$user = Auth::guard('api')->user();
+
+		$subscription = new Subscription;
+
+		$subscription->user_id = $user->id;
+		$subscription->classroom_id = $id;
+
+		$subscription->save();
+
+		return $subscription;
+	}
+
 }

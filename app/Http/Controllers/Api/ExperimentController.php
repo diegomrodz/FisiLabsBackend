@@ -9,6 +9,8 @@ use Auth;
 use FisiLabs\Http\Requests;
 use FisiLabs\Http\Controllers\Controller;
 
+use FisiLabs\Events\SampleWasCreated;
+
 use FisiLabs\Experiment;
 use FisiLabs\Classroom;
 use FisiLabs\Sample;
@@ -51,6 +53,25 @@ class ExperimentController extends Controller
 										->get();
 
 		return $experiment;
+	}
+
+	public function postCreateSample($id, Request $request) 
+	{
+		$user = Auth::guard('api')->user();
+		$experiment = Experiment::find($id);
+		
+		$sample = new Sample;
+
+		$sample->experiment_id = $id;
+		$sample->user_id = $user->id;
+		$sample->value = $request->value;
+		$sample->desc = $request->desc;
+
+		$sample->save();
+
+		event(new SampleWasCreated($experiment));
+
+		return 1;
 	}
 
 }
