@@ -32,8 +32,7 @@ class ClassroomController extends Controller
 					    	'a.name as instructor_name', 
 					    	DB::raw('COUNT(experiments.id) as experiments_qtd')
 					    )
-					    ->groupBy('classrooms.id')
-					    ->orderBy('classrooms.id', 'desc')
+					    ->groupBy('classrooms.id', 'classrooms.instructor_id')
 					    ->paginate(10);
 	}
 
@@ -53,7 +52,6 @@ class ClassroomController extends Controller
 											  	DB::raw('COUNT(s.id) as samples_qtd')
 											  )
 											  ->groupBy('experiments.id')
-											  ->orderBy('experiments.id', 'desc')
 											  ->get();
 
 		$classroom["instructor"] = $classroom->instructor;
