@@ -177,6 +177,7 @@ return [
         FisiLabs\Providers\AuthServiceProvider::class,
         FisiLabs\Providers\EventServiceProvider::class,
         FisiLabs\Providers\RouteServiceProvider::class,
+        FisiLabs\Providers\ViewComposerServiceProvider::class,
 
         Laravel\Passport\PassportServiceProvider::class
 

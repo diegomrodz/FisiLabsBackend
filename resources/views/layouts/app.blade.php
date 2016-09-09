@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="fisilabs">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +19,8 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+
+    <script src="/js/angular.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -35,7 +37,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    FisiLabs
                 </a>
             </div>
 

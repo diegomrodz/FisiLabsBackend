@@ -28,3 +28,14 @@ Route::group([
 	Route::get('/oauth', 'OAuthController');
 
 });
+
+
+Route::group([
+	'prefix' => 'instructor',
+	'namespace' => 'Instructor'
+], function () {
+
+	Route::get('/', 'DashboardController');
+	Route::get('/experiments', 'ExperimentsController');
+
+});

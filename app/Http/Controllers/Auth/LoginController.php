@@ -24,13 +24,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -58,5 +51,12 @@ class LoginController extends Controller
         }
         
         return response()->json("Error", 500);
+    }
+
+    public function redirectPath() 
+    {
+        $user = Auth::user();
+
+        return "/$user->type";
     }
 }

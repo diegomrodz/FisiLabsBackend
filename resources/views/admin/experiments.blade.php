@@ -22,9 +22,8 @@
 					<th>Sala de Estudo</th>
 					<th>Criador</th>
 					<th>Equip. de Medição</th>
-					<th>Erro de Escala</th>
 					<th>Unidade</th>
-					<th>Figuras Sig.</th>
+					<th>Valor Médio</th>
 					<th></th>
 					<th></th>
 				</tr>		
@@ -37,9 +36,8 @@
 					<td>{{ $experiment->classroom->name }}</td>
 					<td>{{ $experiment->creator->name }}</td>
 					<td>{{ $experiment->measure_device }}</td>
-					<td>{{ $experiment->scale_error }}</td>
-					<td>{{ $experiment->unit }}</td>
-					<td>{{ $experiment->sig_figures }}</td>
+					<td>{{ $experiment->unit_name }}</td>
+					<td>{{ number_format($experiment->average, $experiment->sig_figures) }} &plusmn; {{ number_format($experiment->total_error, $experiment->sig_figures) }} {{ $experiment->unit }}</td>
 					<td>
 						<a href="#">Editar</a>
 					</td>
