@@ -37,6 +37,8 @@ Route::group([
 ], function () {
 
 	Route::get('/detail/{id}', 'ExperimentController@getDetail');
+	Route::post('/create', 'ExperimentController@postCreateExperiment');	
+
 	Route::post('/sample/{id}/create', 'ExperimentController@postCreateSample');
 
 });

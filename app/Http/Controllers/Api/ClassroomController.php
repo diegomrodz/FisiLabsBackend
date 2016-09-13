@@ -20,20 +20,30 @@ class ClassroomController extends Controller
     
 	public function getList() 
 	{
-		return Classroom::where('classrooms.active', true)
-					    ->join('users as a', function ($join) {
+		$classrooms = Classroom::where('classrooms.active', true)
+						->join('users as a', function ($join) {
 					    	$join->on('classrooms.instructor_id', '=', 'a.id');
-					    })
-					    ->join('experiments', function ($join) {
-					    	$join->on('classrooms.id', '=', 'experiments.classroom_id');
 					    })
 					    ->select(
 					    	'classrooms.*', 
-					    	'a.name as instructor_name', 
-					    	DB::raw('COUNT(experiments.id) as experiments_qtd')
+					    	'a.name as instructor_name'
 					    )
 					    ->groupBy('classrooms.id')
 					    ->paginate(10);
+
+		foreach ($classrooms as $classroom) 
+		{
+			$classroom["experiments"] = Experiment::where('active', true)
+												  ->where('classroom_id', $classroom["id"])
+												  ->get();
+
+			$classroom["subscriptions"] = Subscription::where('active', true)
+												  ->where('classroom_id', $classroom["id"])
+												  ->groupBy('user_id')
+												  ->get();			
+		}
+
+		return $classrooms;
 	}
 
 	public function getDetail($id) 
@@ -43,12 +53,16 @@ class ClassroomController extends Controller
 
 		$classroom["experiments"] = Experiment::where('experiments.classroom_id', $id)
 											  ->where('experiments.active', true)
-											  ->where('s.active', true)
-											  ->join('samples as s', function ($join) {
-											  	$join->on('s.experiment_id', '=', 'experiments.id');
+											  ->leftJoin('samples as s', function ($join) {
+											  		$join->on('s.experiment_id', '=', 'experiments.id')
+											  	   		 ->where('s.active', true);
+											  })
+											  ->join('users', function ($join) {
+												  $join->on('experiments.creator_id', '=', 'users.id');
 											  })
 											  ->select(
-											  	'experiments.*', 
+											  	'experiments.*',
+											  	'users.name as creator_name', 
 											  	DB::raw('COUNT(s.id) as samples_qtd')
 											  )
 											  ->groupBy('experiments.id')

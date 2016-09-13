@@ -78,7 +78,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.05,
 						"sig_figure" => 3,
 						"unit" => "s",
-						"unit_name" => "Segundos",
+						"unit_name" => "Segundo",
 
 						"samples" => [
 							[
@@ -114,7 +114,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.5,
 						"sig_figure" => 4,
 						"unit" => "m",
-						"unit_name" => "Metros",
+						"unit_name" => "Metro",
 
 						"samples" => [
 							[
@@ -159,7 +159,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.05,
 						"sig_figure" => 3,
 						"unit" => "s",
-						"unit_name" => "Segundos",
+						"unit_name" => "Segundo",
 
 						"samples" => [
 							[
@@ -195,7 +195,7 @@ class DummyDataSeeder extends Seeder
 						"scale_error" => 0.5,
 						"sig_figure" => 4,
 						"unit" => "m",
-						"unit_name" => "Metros",
+						"unit_name" => "Metro",
 
 						"samples" => [
 							[

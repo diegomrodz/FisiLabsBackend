@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<input type="hidden" id="access_token" value="{{ $access_token }}">
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-2 sidebar">

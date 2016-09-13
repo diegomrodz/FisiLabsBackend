@@ -17,7 +17,10 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer(
             ['admin.*', 'instructor.*'],
             function ($view) {
-                $view->with('user', Auth::user());
+                $user = Auth::user();
+
+                $view->with('user', $user);
+                $view->with('access_token', $user->createToken($user->email . ' personal token.')->accessToken);
             }
         );
     }

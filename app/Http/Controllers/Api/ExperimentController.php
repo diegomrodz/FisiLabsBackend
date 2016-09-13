@@ -50,9 +50,20 @@ class ExperimentController extends Controller
 											$join->on('samples.user_id', '=', 'users.id');
 										})
 										->select('users.*')
+										->groupBy('users.id')
 										->get();
 
 		return $experiment;
+	}
+
+	public function postCreateExperiment(Request $request) 
+	{
+		$user = Auth::guard('api')->user();
+		$form = $request->all();
+
+		$form["creator_id"] = $user->id;
+
+		return Experiment::create($form);
 	}
 
 	public function postCreateSample($id, Request $request) 
