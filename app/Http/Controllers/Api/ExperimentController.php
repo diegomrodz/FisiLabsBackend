@@ -16,6 +16,9 @@ use FisiLabs\Classroom;
 use FisiLabs\Sample;
 use FisiLabs\User;
 use FisiLabs\Subscription;
+use FisiLabs\ExperimentGroup;
+use FisiLabs\ExperimentSubscription;
+use FisiLabs\ExperimentGroupMember;
 
 class ExperimentController extends Controller
 {
@@ -28,30 +31,67 @@ class ExperimentController extends Controller
 		$experiment["classroom"] = $experiment->classroom;
 		$experiment["creator"] = $experiment->creator;
 
-		$experiment["samples"] = Sample::where('samples.experiment_id', $id)
-									   ->where('samples.active', true)
-									   ->join('users as u', function ($join) {
-									   		$join->on('u.id', '=', 'samples.user_id');
-									   })
-									   ->select(
-									   		'samples.*',
-									   		'u.name as user_name'
-									   )
-									   ->get();
+		if ($experiment->experiment_mode == "individual") 
+		{
+			$experiment["samples"] = Sample::where('samples.experiment_id', $id)
+										   ->where('samples.active', true)
+										   ->join('users as u', function ($join) {
+										   		$join->on('u.id', '=', 'samples.user_id');
+										   })
+										   ->select(
+										   		'samples.*',
+										   		'u.name as user_name'
+										   )
+										   ->get();
 
-		$experiment["subscription"] = Subscription::where('classroom_id', $experiment->classroom_id)
-													->where('user_id', $user->id)
-													->where('active', true)
-													->first();
+			$experiment["subscription"] = ExperimentSubscription::where('experiment_id', $experiment->id)
+																 ->where('user_id', $user->id)
+																 ->where('active', true)
+																 ->first(); 
 
 
-		$experiment["students"] = Sample::where('samples.experiment_id', $id)
-										->join('users', function ($join) {
-											$join->on('samples.user_id', '=', 'users.id');
-										})
-										->select('users.*')
-										->groupBy('users.id')
-										->get();
+			$experiment["students"] = Sample::where('samples.experiment_id', $id)
+											->join('users', function ($join) {
+												$join->on('samples.user_id', '=', 'users.id');
+											})
+											->select('users.*')
+											->groupBy('users.id')
+											->get();
+		}
+		else if ($experiment->experiment_mode == "group") 
+		{
+
+			$experiment["subscription"] = ExperimentGroupMember::where('groups.experiment_id', $experiment->id)
+															   ->where('experiment_group_members.user_id', $user->id)
+															   ->where('groups.active', true)
+															   ->where('experiment_group_members.active', true)
+															   ->join('experiment_groups as groups', function ($join) {
+															   		$join->on('experiment_group_members.group_id', '=', 'groups.id');
+															   })
+															   ->select('experiment_group_members.*')
+															   ->first();
+
+			$experiment["groups"] = ExperimentGroup::where('experiment_id', $experiment->id)
+												   ->where('active', true)
+												   ->get();
+
+			foreach ($experiment["groups"] as $group) 
+			{
+				$group["samples"] = Sample::where('samples.experiment_id', $experiment->id)
+										  ->where('samples.group_id', $group["id"])
+										  ->where('samples.active', true)
+										  ->join('users', function ($join) {
+										  	$join->on('samples.user_id', '=', 'users.id');
+										  })
+										  ->select('samples.*', 'users.name as user_name')
+										  ->get();
+
+				$group["members"] = ExperimentGroupMember::where('group_id', $group["id"])
+														 ->where('active', true)
+														 ->get();
+			}
+
+		}
 
 		return $experiment;
 	}

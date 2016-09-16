@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 
 use FisiLabs\User;
 use FisiLabs\Experiment;
+use FisiLabs\ExperimentSubscription;
+use FisiLabs\ExperimentGroup;
+use FisiLabs\ExperimentGroupMember;
 use FisiLabs\Classroom;
 use FisiLabs\Sample;
 use FisiLabs\Subscription;
@@ -76,9 +79,9 @@ class DummyDataSeeder extends Seeder
 						"desc" => "Experimento para testar aplicação",
 						"measure_device" => "Cronometro",
 						"scale_error" => 0.05,
-						"sig_figure" => 3,
 						"unit" => "s",
 						"unit_name" => "Segundo",
+						"mode" => "individual",
 
 						"samples" => [
 							[
@@ -86,65 +89,119 @@ class DummyDataSeeder extends Seeder
 								"value" => 3.23
 							],
 							[
+								"user" => "aluno.a@email.com",
+								"value" => 3.25
+							],
+							[
+								"user" => "aluno.a@email.com",
+								"value" => 3.24
+							],
+							[
 								"user" => "aluno.b@email.com",
-								"value" => 3.08
+								"value" => 3.14
+							],
+							[
+								"user" => "aluno.b@email.com",
+								"value" => 3.12
+							],
+							[
+								"user" => "aluno.b@email.com",
+								"value" => 3.10
 							],
 							[
 								"user" => "aluno.c@email.com",
-								"value" => 3.30
+								"value" => 3.15
+							],
+							[
+								"user" => "aluno.c@email.com",
+								"value" => 3.11
+							],
+							[
+								"user" => "aluno.c@email.com",
+								"value" => 3.20
 							],
 							[
 								"user" => "aluno.d@email.com",
-								"value" => 3.26
+								"value" => 3.13
+							],
+							[
+								"user" => "aluno.d@email.com",
+								"value" => 3.13
+							],
+							[
+								"user" => "aluno.d@email.com",
+								"value" => 3.10
 							],
 							[
 								"user" => "aluno.e@email.com",
-								"value" => 3.19
+								"value" => 3.11
+							],
+							[
+								"user" => "aluno.e@email.com",
+								"value" => 3.12
+							],
+							[
+								"user" => "aluno.e@email.com",
+								"value" => 3.13
 							],
 							[
 								"user" => "aluno.f@email.com",
 								"value" => 3.18
+							],
+							[
+								"user" => "aluno.f@email.com",
+								"value" => 3.15
+							],
+							[
+								"user" => "aluno.f@email.com",
+								"value" => 3.10
 							]
 						]
 					],					
 					[
-						"name" => "Experimento B",
+						"name" => "Experimento A",
 						"desc" => "Experimento para testar aplicação",
-						"measure_device" => "Régua",
-						"scale_error" => 0.5,
-						"sig_figure" => 4,
-						"unit" => "m",
-						"unit_name" => "Metro",
+						"measure_device" => "Cronometro",
+						"scale_error" => 0.05,
+						"unit" => "s",
+						"unit_name" => "Segundo",
+						"mode" => "group",
 
-						"samples" => [
-							[
-								"user" => "aluno.a@email.com",
-								"value" => 1.43
+						"groups" => [
+
+							"Grupo 1" => [
+								[
+									"user" => "aluno.a@email.com",
+									"value" => 3.23
+								],
+								[
+									"user" => "aluno.b@email.com",
+									"value" => 3.08
+								],
+								[
+									"user" => "aluno.c@email.com",
+									"value" => 3.30
+								]
 							],
-							[
-								"user" => "aluno.b@email.com",
-								"value" => 2.08
-							],
-							[
-								"user" => "aluno.c@email.com",
-								"value" => 1.30
-							],
-							[
-								"user" => "aluno.d@email.com",
-								"value" => 2.26
-							],
-							[
-								"user" => "aluno.e@email.com",
-								"value" => 2.19
-							],
-							[
-								"user" => "aluno.f@email.com",
-								"value" => 1.18
+
+							"Grupo 2" => [
+								[
+									"user" => "aluno.d@email.com",
+									"value" => 3.26
+								],
+								[
+									"user" => "aluno.e@email.com",
+									"value" => 3.19
+								],
+								[
+									"user" => "aluno.f@email.com",
+									"value" => 3.18
+								]
 							]
+							
 						]
 					]
 				]
-
 			],
 			[
 				"instructor" => "professor.b@email.com",
@@ -157,9 +214,9 @@ class DummyDataSeeder extends Seeder
 						"desc" => "Experimento para testar aplicação",
 						"measure_device" => "Cronometro",
 						"scale_error" => 0.05,
-						"sig_figure" => 3,
 						"unit" => "s",
 						"unit_name" => "Segundo",
+						"mode" => "individual",
 
 						"samples" => [
 							[
@@ -193,9 +250,9 @@ class DummyDataSeeder extends Seeder
 						"desc" => "Experimento para testar aplicação",
 						"measure_device" => "Fita Métrica",
 						"scale_error" => 0.5,
-						"sig_figure" => 4,
 						"unit" => "m",
 						"unit_name" => "Metro",
+						"mode" => "individual",
 
 						"samples" => [
 							[
@@ -274,24 +331,59 @@ class DummyDataSeeder extends Seeder
         		$experiment = Experiment::create([
         			"classroom_id" => $classrom->id,
         			"creator_id" => $instructor->id,
+        			"experiment_mode" => $_experiment["mode"],
         			"name" => $_experiment["name"],
         			"description" => $_experiment["desc"],
         			"measure_device" => $_experiment["measure_device"],
         			"scale_error" => $_experiment["scale_error"],
-        			"sig_figures" => $_experiment["sig_figure"],
         			"unit" => $_experiment["unit"],
         			"unit_name" => $_experiment["unit_name"]
         		]);
 
-        		foreach ($_experiment["samples"] as $_sample) 
+        		if ($_experiment["mode"] == "individual") 
         		{
-        			$student = User::where('email', $_sample["user"])->first();
+        			foreach ($_experiment["samples"] as $_sample) 
+	        		{
+	        			$student = User::where('email', $_sample["user"])->first();
 
-        			$sample = Sample::create([
-        				"experiment_id" => $experiment->id,
-        				"user_id" => $student->id,
-        				"value" => $_sample["value"]
-        			]);
+	        			$subscription = ExperimentSubscription::create([
+	        				"experiment_id" => $experiment->id,
+	        				"user_id" => $student->id
+	        			]);
+
+	        			$sample = Sample::create([
+	        				"experiment_id" => $experiment->id,
+	        				"user_id" => $student->id,
+	        				"value" => $_sample["value"]
+	        			]);
+	        		}
+        		}
+        		else if ($_experiment["mode"] == "group") 
+        		{
+        			foreach ($_experiment["groups"] as $_groupName => $_group) 
+        			{
+        				$group = ExperimentGroup::create([
+        					"experiment_id" => $experiment->id,
+        					"name" => $_groupName
+        				]);
+
+        				foreach ($_group as $_sample) 
+        				{
+		        			$student = User::where('email', $_sample["user"])->first();
+
+	        				$member = ExperimentGroupMember::create([
+	        					"group_id" => $group->id,
+	        					"user_id" => $student->id
+	        				]);
+
+	        				$sample = Sample::create([
+	        					"experiment_id" => $experiment->id,
+	        					"user_id" => $student->id, 
+	        					"group_id" => $group->id,
+	        					"value" => $_sample["value"]
+	        				]);
+        				}
+        			}
         		}
         	}
 

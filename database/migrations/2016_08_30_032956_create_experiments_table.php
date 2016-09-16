@@ -24,7 +24,7 @@ class CreateExperimentsTable extends Migration
 
             $table->string('measure_device')->nullable(false);
             $table->double('scale_error')->nullable(false);
-            $table->unsignedInteger('sig_figures')->nullable(false);
+            $table->unsignedInteger('sig_figures')->nullable(true);
             $table->string('unit')->nullable(false);
             $table->string('unit_name')->nullable(false);
 

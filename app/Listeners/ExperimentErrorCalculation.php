@@ -27,33 +27,17 @@ class ExperimentErrorCalculation
     public function handle(SampleWasCreated $event)
     {
         $experiment = $event->experiment;
-        $samples = $experiment->samples; 
-        $sum = 0;
-        $count = 0;
-
-        $experiment->sistematic_error = $experiment->scale_error / 2;
-
-        foreach ($samples as $sample) 
+       
+        if ($experiment->experiment_mode == 'individual') 
         {
-            $sum += $sample->value;
-            $count += 1; 
+            $experiment->calculateTotalError();
         }
-
-        $experiment->average = $sum / $count;
-        
-        $experiment->quadratic_average_deviation = 0;
-
-        foreach ($samples as $sample) 
+        else 
         {
-            $experiment->quadratic_average_deviation += pow($sample->value - $experiment->average, 2);
+            foreach ($experiment->groups() as $group) 
+            {
+                $group->calculateTotalError();
+            }
         }
-
-        $experiment->standard_deviation = sqrt($experiment->quadratic_average_deviation);
-        
-        $experiment->total_error = sqrt(
-            pow($experiment->sistematic_error, 2) + pow($experiment->standard_deviation, 2)
-        );
-
-        $experiment->save();
     }
 }

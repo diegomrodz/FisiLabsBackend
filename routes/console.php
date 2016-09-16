@@ -22,6 +22,16 @@ Artisan::command('inspire', function () {
 Artisan::command('calc:all', function () {
 	foreach (Experiment::get() as $experiment) 
 	{
-		event(new SampleWasCreated($experiment));
+		if ($experiment->experiment_mode == 'individual') 
+		{
+			$experiment->calculateTotalError();
+		}
+		else 
+		{
+			foreach ($experiment->groups() as $group) 
+			{
+				$group->calculateTotalError();
+			}
+		}
 	}
 })->describe('Calculates the error for all experiment at the application');
