@@ -86,8 +86,12 @@ class ExperimentController extends Controller
 										  ->select('samples.*', 'users.name as user_name')
 										  ->get();
 
-				$group["members"] = ExperimentGroupMember::where('group_id', $group["id"])
-														 ->where('active', true)
+				$group["members"] = ExperimentGroupMember::where('experiment_group_members.group_id', $group["id"])
+														 ->where('experiment_group_members.active', true)
+														 ->join('users', function ($join) {
+														 	$join->on('users.id', '=', 'experiment_group_members.user_id');
+														 })
+														 ->select('experiment_group_members.*', 'users.name as user_name')
 														 ->get();
 			}
 
