@@ -18,6 +18,7 @@ class CreateSampleValuesTable extends Migration
             $table->unsignedInteger('sample_id')->nullable(false);
             $table->string('var_id')->nullable(true);
             $table->double('value')->nullable(true);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

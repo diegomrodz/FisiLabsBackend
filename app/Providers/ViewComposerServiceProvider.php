@@ -20,7 +20,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $user = Auth::user();
 
                 $view->with('user', $user);
-                $view->with('access_token', $user->createToken($user->email . ' personal token.')->accessToken);
+                $view->with('access_token', $user->accessToken);
             }
         );
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSampleVariablesTable extends Migration
+class CreateExperimentGroupDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,12 @@ class CreateSampleVariablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sample_variables', function (Blueprint $table) {
+        Schema::create('experiment_group_devices', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name')->nullable(false);
-            $table->string('desc')->nullable(true);
-
-            $table->string('symbol')->nullable(false);
-
-            $table->string('measure_device')->nullable(false);
-            $table->double('scale_error')->nullable(false);
-            $table->unsignedInteger('sig_figures')->nullable(true);
-            $table->string('unit')->nullable(false);
-            $table->string('unit_name')->nullable(false);
+            $table->unsignedInteger('experiment_id')->nullable(false);
+            $table->unsignedInteger('group_id')->nullable(false);
+            $table->unsignedInteger('device_id')->nullable(false);
 
             $table->double('average')->nullable(true);
             $table->double('quadratic_average_deviation')->nullable(true);
@@ -45,6 +38,6 @@ class CreateSampleVariablesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sample_variables');
+        Schema::drop('experiment_group_devices');
     }
 }

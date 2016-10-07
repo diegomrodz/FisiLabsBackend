@@ -2,7 +2,8 @@
 
 use Illuminate\Foundation\Inspiring;
 use FisiLabs\Experiment;
-use FisiLabs\Events\SampleWasCreated;
+
+use FisiLabs\Facades\FisiLabsCalc;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,18 +21,12 @@ Artisan::command('inspire', function () {
 });
 
 Artisan::command('calc:all', function () {
-	foreach (Experiment::get() as $experiment) 
+	
+	$exs = Experiment::where('active', true)->get();
+
+	foreach ($exs as $e) 
 	{
-		if ($experiment->experiment_mode == 'individual') 
-		{
-			$experiment->calculateTotalError();
-		}
-		else 
-		{
-			foreach ($experiment->groups() as $group) 
-			{
-				$group->calculateTotalError();
-			}
-		}
+		FisiLabsCalc::experimentTotalError($e);
 	}
+
 })->describe('Calculates the error for all experiment at the application');

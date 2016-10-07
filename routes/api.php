@@ -37,8 +37,22 @@ Route::group([
 ], function () {
 
 	Route::get('/detail/{id}', 'ExperimentController@getDetail');
+
+	Route::get('/groups/{id}', 'ExperimentController@getGroups');
+
 	Route::post('/create', 'ExperimentController@postCreateExperiment');	
 
 	Route::post('/sample/{id}/create', 'ExperimentController@postCreateSample');
+
+	Route::get('/subscribe/{id}', 'ExperimentController@getSubscribe');
+
+});
+
+Route::group([
+	'namespace' => 'Api',
+	'prefix' => 'experiment_group'
+], function () {
+
+	Route::get('/subscribe/{id}', 'ExperimentGroupController@getSubscribe');
 
 });

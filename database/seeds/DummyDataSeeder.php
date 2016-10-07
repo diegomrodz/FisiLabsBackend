@@ -7,12 +7,16 @@ use FisiLabs\Experiment;
 use FisiLabs\ExperimentSubscription;
 use FisiLabs\ExperimentGroup;
 use FisiLabs\ExperimentGroupMember;
+use FisiLabs\ExperimentGroupDevice;
+use FisiLabs\ExperimentDevice;
 use FisiLabs\Classroom;
 use FisiLabs\Sample;
 use FisiLabs\Subscription;
+use FisiLabs\SampleValue;
 
 class DummyDataSeeder extends Seeder
 {
+
 	protected $data = [
 		"users" => [
 			[
@@ -222,7 +226,7 @@ class DummyDataSeeder extends Seeder
 						"instruments" => [
 							[
 								"experiment_device" => "Cronometro 1",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"samples" => [
@@ -302,7 +306,7 @@ class DummyDataSeeder extends Seeder
 							],
 							[
 								"experiment_device" => "Cronometro 2",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"samples" => [
@@ -382,7 +386,7 @@ class DummyDataSeeder extends Seeder
 							],
 							[
 								"experiment_device" => "Cronometro 3",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"samples" => [
@@ -477,7 +481,7 @@ class DummyDataSeeder extends Seeder
 						"instruments" => [
 							[
 								"experiment_device" => "Cronometro 1",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"groups" => [
@@ -516,7 +520,7 @@ class DummyDataSeeder extends Seeder
 							],
 							[
 								"experiment_device" => "Cronometro 2",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"groups" => [
@@ -555,7 +559,7 @@ class DummyDataSeeder extends Seeder
 							],
 							[
 								"experiment_device" => "Cronometro 3",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"groups" => [
@@ -614,45 +618,21 @@ class DummyDataSeeder extends Seeder
 						"samples" => [
 							[
 								"user" => "aluno.a@email.com",
-								"values" =>
-									array_map(function () {
-										return rand(3, 18);
-									}, range(0, 50)) 
 							],
 							[
 								"user" => "aluno.b@email.com",
-								"values" =>
-									array_map(function () {
-										return rand(3, 18);
-									}, range(0, 50)) 
 							],
 							[
 								"user" => "aluno.c@email.com",
-								"values" => 
-									array_map(function () {
-										return rand(3, 18);
-									}, range(0, 50)) 
 							],
 							[
 								"user" => "aluno.d@email.com",
-								"values" => 
-									array_map(function () {
-										return rand(3, 18);
-									}, range(0, 50)) 
 							],
 							[
 								"user" => "aluno.e@email.com",
-								"values" => 
-									array_map(function () {
-										return rand(3, 18);
-									}, range(0, 50)) 
 							],
 							[
 								"user" => "aluno.f@email.com",
-								"values" => 
-									array_map(function () {
-										return rand(3, 18);
-									}, range(0, 50)) 
 							]
 						]
 					],
@@ -665,7 +645,7 @@ class DummyDataSeeder extends Seeder
 						"unit" => "",
 						"unit_name" => "",
 						"mode" => "group",
-						"is_ranged" => false,
+						"is_ranged" => true,
 						"range_start" => 3,
 						"range_stop" => 18,
 						"range_step" => 1,
@@ -677,48 +657,24 @@ class DummyDataSeeder extends Seeder
 							"Grupo 1" => [
 								[
 									"user" => "aluno.a@email.com",
-									"values" => 
-										array_map(function () {
-											return rand(3, 18);
-										}, range(0, 50)) 
 								],
 								[
 									"user" => "aluno.b@email.com",
-									"values" => 
-										array_map(function () {
-											return rand(3, 18);
-										}, range(0, 50)) 
 								],
 								[
 									"user" => "aluno.c@email.com",
-									"values" => 
-										array_map(function () {
-											return rand(3, 18);
-										}, range(0, 50)) 
 								]
 							],
 
 							"Grupo 2" => [
 								[
 									"user" => "aluno.d@email.com",
-									"values" => 
-										array_map(function () {
-											return rand(3, 18);
-										}, range(0, 50))
 								],
 								[
 									"user" => "aluno.e@email.com",
-									"values" => 
-										array_map(function () {
-											return rand(3, 18);
-										}, range(0, 50))
 								],
 								[
 									"user" => "aluno.f@email.com",
-									"values" => 
-										array_map(function () {
-											return rand(3, 18);
-										}, range(0, 50))
 								]
 							]
 						]
@@ -732,160 +688,91 @@ class DummyDataSeeder extends Seeder
 						"unit" => "s",
 						"unit_name" => "Segundos",
 						"mode" => "individual",
-						"is_ranged" => false,
+						"is_ranged" => true,
+						"range_start" => 5,
+						"range_stop" => 15,
+						"range_step" => 1,
 						"using_multiple_devices" => true,
 						"measure_type" => "multiple",
 
 						"instruments" => [
 							[
 								"experiment_device" => "Cronometro 1",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"samples" => [
 									[
 										"user" => "aluno.a@email.com",
-										"values" =>
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.b@email.com",
-										"values" =>
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.c@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.d@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.e@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.f@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5))
 									]
 								]
 
 							],
 							[
 								"experiment_device" => "Cronometro 2",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"samples" => [
 									[
 										"user" => "aluno.a@email.com",
-										"values" =>
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.b@email.com",
-										"values" =>
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.c@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.d@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.e@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.f@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5))
 									]
 								]
 
 							],
 							[
 								"experiment_device" => "Cronometro 3",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"samples" => [
 									[
 										"user" => "aluno.a@email.com",
-										"values" =>
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.b@email.com",
-										"values" =>
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.c@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.d@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.e@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5)) 
 									],
 									[
 										"user" => "aluno.f@email.com",
-										"values" => 
-											array_map(function () {
-												return rand(3, 5);
-											}, range(0, 5))
 									]
 								]
 
@@ -900,14 +787,17 @@ class DummyDataSeeder extends Seeder
 						"unit" => "s",
 						"unit_name" => "Segundos",
 						"mode" => "group",
-						"is_ranged" => false,
+						"is_ranged" => true,
 						"using_multiple_devices" => true,
 						"measure_type" => "multiple",
+						"range_start" => 5,
+						"range_stop"  => 15,
+						"range_step"  => 1,
 
 						"instruments" => [
 							[
 								"experiment_device" => "Cronometro 1",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"groups" => [
@@ -915,48 +805,24 @@ class DummyDataSeeder extends Seeder
 									"Grupo 1" => [
 										[
 											"user" => "aluno.a@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										],
 										[
 											"user" => "aluno.b@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										],
 										[
 											"user" => "aluno.c@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										]
 									],
 
 									"Grupo 2" => [
 										[
 											"user" => "aluno.d@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										],
 										[
 											"user" => "aluno.e@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										],
 										[
 											"user" => "aluno.f@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										]
 									]
 								]
@@ -964,7 +830,7 @@ class DummyDataSeeder extends Seeder
 							],
 							[
 								"experiment_device" => "Cronometro 2",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"groups" => [
@@ -972,55 +838,31 @@ class DummyDataSeeder extends Seeder
 									"Grupo 1" => [
 										[
 											"user" => "aluno.a@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										],
 										[
 											"user" => "aluno.b@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										],
 										[
 											"user" => "aluno.c@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										]
 									],
 
 									"Grupo 2" => [
 										[
 											"user" => "aluno.d@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										],
 										[
 											"user" => "aluno.e@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										],
 										[
 											"user" => "aluno.f@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										]
 									]
 								]
 							],
 							[
 								"experiment_device" => "Cronometro 3",
-								"scale_eror" => 0.05,
+								"scale_error" => 0.05,
 								"decimal_places" => 2,
 
 								"groups" => [
@@ -1028,48 +870,24 @@ class DummyDataSeeder extends Seeder
 									"Grupo 1" => [
 										[
 											"user" => "aluno.a@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										],
 										[
 											"user" => "aluno.b@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										],
 										[
 											"user" => "aluno.c@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5)) 
 										]
 									],
 
 									"Grupo 2" => [
 										[
 											"user" => "aluno.d@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										],
 										[
 											"user" => "aluno.e@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										],
 										[
 											"user" => "aluno.f@email.com",
-											"values" => 
-												array_map(function () {
-													return rand(3, 5);
-												}, range(0, 5))
 										]
 									]
 								]
@@ -1130,58 +948,324 @@ class DummyDataSeeder extends Seeder
         			"classroom_id" => $classrom->id,
         			"creator_id" => $instructor->id,
         			"experiment_mode" => $_experiment["mode"],
+        			"is_ranged" => $_experiment["is_ranged"],
+        			"using_multiple_devices" => $_experiment["using_multiple_devices"],
         			"name" => $_experiment["name"],
+        			"measure_type" => $_experiment["measure_type"],
         			"description" => $_experiment["desc"],
-        			"measure_device" => $_experiment["measure_device"],
-        			"scale_error" => $_experiment["scale_error"],
         			"unit" => $_experiment["unit"],
         			"unit_name" => $_experiment["unit_name"]
         		]);
 
-        		if ($_experiment["mode"] == "individual") 
+        		if ($_experiment["is_ranged"]) 
         		{
-        			foreach ($_experiment["samples"] as $_sample) 
-	        		{
-	        			$student = User::where('email', $_sample["user"])->first();
-
-	        			$subscription = ExperimentSubscription::create([
-	        				"experiment_id" => $experiment->id,
-	        				"user_id" => $student->id
-	        			]);
-
-	        			$sample = Sample::create([
-	        				"experiment_id" => $experiment->id,
-	        				"user_id" => $student->id,
-	        				"value" => $_sample["value"]
-	        			]);
-	        		}
+        			$experiment->range_start = $_experiment["range_start"];
+        			$experiment->range_stop = $_experiment["range_stop"];
+        			$experiment->range_step = $_experiment["range_step"];
+        		
+        			$experiment->save();
         		}
-        		else if ($_experiment["mode"] == "group") 
+
+        		if ($_experiment["using_multiple_devices"]) 
         		{
-        			foreach ($_experiment["groups"] as $_groupName => $_group) 
+        			if ($_experiment["mode"] == "individual") 
         			{
-        				$group = ExperimentGroup::create([
-        					"experiment_id" => $experiment->id,
-        					"name" => $_groupName
-        				]);
-
-        				foreach ($_group as $_sample) 
+        				foreach ($_experiment["instruments"] as $_instrument) 
         				{
-		        			$student = User::where('email', $_sample["user"])->first();
+        					$instrument = ExperimentDevice::create([
+        						"name" => $_instrument["experiment_device"],
+        						"scale_error" => $_instrument["scale_error"],
+        						"decimal_places" => $_instrument["decimal_places"]
+        					]);
 
-	        				$member = ExperimentGroupMember::create([
-	        					"group_id" => $group->id,
-	        					"user_id" => $student->id
-	        				]);
+        					foreach ($_instrument["samples"] as $sample) 
+        					{
+        						$student = User::where('email', $_sample["user"])->first();
 
-	        				$sample = Sample::create([
-	        					"experiment_id" => $experiment->id,
-	        					"user_id" => $student->id, 
-	        					"group_id" => $group->id,
-	        					"value" => $_sample["value"]
-	        				]);
+			        			$subscription = ExperimentSubscription::create([
+			        				"experiment_id" => $experiment->id,
+			        				"user_id" => $student->id
+			        			]);
+
+			        			if ($_experiment["measure_type"] == "simple") 
+			        			{
+									$sample = Sample::create([
+					        			"experiment_id" => $experiment->id,
+					        			"user_id" => $student->id,
+					        			"experiment_device_id" => $instrument->id,
+					        			"value" => $_sample["value"]
+					        		]);
+			        			}
+			        			else 
+			        			{
+
+			        				$sample = Sample::create([
+					        			"experiment_id" => $experiment->id,
+					        			"user_id" => $student->id,
+					        			"experiment_device_id" => $instrument->id
+					        		]);		
+
+			        				if ($experiment->is_ranged) 
+			        				{
+			        					foreach (range(0, 5) as $value) 
+				        				{
+					        				$s_value = SampleValue::create([
+					        					"sample_id" => $sample->id,
+					        					"value" => rand($experiment->range_start, $experiment->range_stop)
+					        				]);		
+				        				}
+			        				}
+			        				else 
+			        				{
+			        					foreach ($_sample["values"] as $value) 
+				        				{
+					        				$s_value = SampleValue::create([
+							        			"sample_id" => $sample->id,
+							        			"value" => $value
+							        		]);		
+				        				}	
+			        				}
+			        			}
+        					}
         				}
         			}
+        			else // group 
+        			{
+        				foreach ($_experiment["instruments"] as $_instrument) 
+        				{
+        					$instrument = ExperimentDevice::create([
+        						"name" => $_instrument["experiment_device"],
+        						"experiment_id" => $experiment->id,
+        						"scale_error" => $_instrument["scale_error"],
+        						"decimal_places" => $_instrument["decimal_places"]
+        					]);
+
+        					foreach ($_instrument["groups"] as $groupName => $_group) 
+        					{
+        						$group = ExperimentGroup::create([
+        							"experiment_id" => $experiment->id,
+        							"name" => $groupName
+        						]);
+
+        						$groupDevice = ExperimentGroupDevice::create([
+        							"experiment_id" => $experiment->id,
+        							"group_id" => $group->id,
+        							"device_id" => $instrument->id,
+        						]);
+
+        						foreach ($_group as $_member) 
+        						{
+									$student = User::where('email', $_member["user"])->first();
+
+				        			$subscription = ExperimentSubscription::create([
+				        				"experiment_id" => $experiment->id,
+				        				"user_id" => $student->id
+				        			]);
+
+				        			$member = ExperimentGroupMember::create([
+				        				"group_id" => $group->id,
+				        				"user_id" => $student->id
+				        			]);
+
+				        			if ($_experiment["measure_type"] == "multiple") 
+				        			{
+				        				$sample = Sample::create([
+							        		"experiment_id" => $experiment->id,
+							        		"user_id" => $student->id,
+							        		"group_id" => $group->id,
+							        		"experiment_device_id" => $instrument->id
+							        	]);
+
+				        				if ($experiment->is_ranged) 
+				        				{
+				        					foreach (range(0, 5) as $value) 
+				        					{
+							        			$s_value = SampleValue::create([
+							        				"sample_id" => $sample->id,
+							        				"value" => rand($experiment->range_start, $experiment->range_stop)
+							        			]);
+				        					}
+				        				}
+				        				else 
+				        				{
+											foreach ($_group["values"] as $value) 
+				        					{
+							        			$s_value = SampleValue::create([
+							        				"sample_id" => $sample->id,
+							        				"value" => $value
+							        			]);
+				        					}	
+				        				}
+				        			}
+				        			else 
+				        			{
+				        				$sample = Sample::create([
+							        		"experiment_id" => $experiment->id,
+							        		"user_id" => $student->id,
+							        		"group_id" => $group->id,
+							        		"experiment_device_id" => $instrument->id,
+							        		"value" => $_member["value"]
+							        	]);
+				        			}
+
+        						}
+
+        					}
+        				}
+        			}
+        		}
+        		else 
+        		{
+        			$experiment["measure_device"] = $_experiment["measure_device"];
+
+        			$experiment->save();
+
+	        		if ($_experiment["mode"] == "individual") 
+	        		{
+	        			if ($_experiment["measure_type"] == "simple") 
+	        			{
+		        			foreach ($_experiment["samples"] as $_sample) 
+			        		{
+			        			$student = User::where('email', $_sample["user"])->first();
+
+			        			$subscription = ExperimentSubscription::create([
+			        				"experiment_id" => $experiment->id,
+			        				"user_id" => $student->id
+			        			]);
+
+			        			$sample = Sample::create([
+				        			"experiment_id" => $experiment->id,
+				        			"user_id" => $student->id,
+				        			"value" => $_sample["value"]
+				        		]);
+			        		}
+	        			}
+	        			else 
+	        			{
+	        				foreach ($_experiment["samples"] as $_sample) 
+			        		{
+			        			$student = User::where('email', $_sample["user"])->first();
+
+			        			$subscription = ExperimentSubscription::create([
+			        				"experiment_id" => $experiment->id,
+			        				"user_id" => $student->id
+			        			]);
+
+			        			$sample = Sample::create([
+			        				"experiment_id" => $experiment->id,
+			        				"user_id" => $student->id
+			        			]);
+
+			        			if ($experiment->is_ranged) 
+			        			{
+				        			foreach (range(0, 5) as $_value) 
+				        			{
+				        				$value = SampleValue::create([
+						        			"sample_id" => $sample->id,
+						        			"value" => rand($experiment->range_start, $experiment->range_stop)
+						        		]);
+				        			}
+			        			}
+			        			else 
+			        			{
+			        				foreach ($_sample["values"] as $_value) 
+				        			{
+				        				$value = SampleValue::create([
+						        			"sample_id" => $sample->id,
+						        			"value" => $_value
+						        		]);
+				        			}
+			        			}
+			        		}	
+	        			}
+	        		}
+	        		else if ($_experiment["mode"] == "group") 
+	        		{
+	        			if ($_experiment["measure_type"] == "simple") 
+	        			{
+		        			foreach ($_experiment["groups"] as $_groupName => $_group) 
+		        			{
+		        				$group = ExperimentGroup::create([
+		        					"experiment_id" => $experiment->id,
+		        					"name" => $_groupName
+		        				]);
+
+		        				foreach ($_group as $_sample) 
+		        				{
+				        			$student = User::where('email', $_sample["user"])->first();
+
+				        			$subscription = ExperimentSubscription::create([
+				        				"experiment_id" => $experiment->id,
+				        				"user_id" => $student->id
+				        			]);
+
+			        				$member = ExperimentGroupMember::create([
+			        					"group_id" => $group->id,
+			        					"user_id" => $student->id
+			        				]);
+
+			        				$sample = Sample::create([
+			        					"experiment_id" => $experiment->id,
+			        					"user_id" => $student->id, 
+			        					"group_id" => $group->id,
+			        					"value" => $_sample["value"]
+			        				]);
+		        				}
+		        			}
+	        			}
+	        			else // multiple 
+	        			{
+		        			foreach ($_experiment["groups"] as $_groupName => $_group) 
+		        			{
+		        				$group = ExperimentGroup::create([
+		        					"experiment_id" => $experiment->id,
+		        					"name" => $_groupName
+		        				]);
+
+		        				foreach ($_group as $_sample) 
+		        				{
+				        			$student = User::where('email', $_sample["user"])->first();
+
+				        			$subscription = ExperimentSubscription::create([
+				        				"experiment_id" => $experiment->id,
+				        				"user_id" => $student->id
+				        			]);
+
+			        				$member = ExperimentGroupMember::create([
+			        					"group_id" => $group->id,
+			        					"user_id" => $student->id
+			        				]);
+
+			        				$sample = Sample::create([
+			        					"experiment_id" => $experiment->id,
+			        					"user_id" => $student->id, 
+			        					"group_id" => $group->id,
+			        				]);
+
+			        				if ($experiment->is_ranged) 
+			        				{
+			        					foreach (range(0, 5) as $_value) 
+				        				{
+											$value = SampleValue::create([
+					        					"sample_id" => $sample->id,
+					        					"value" => rand($experiment->range_start, $experiment->range_stop)
+					        				]);
+				        				}
+			        				}
+			        				else 
+			        				{
+			        					foreach ($_sample["values"] as $_value) 
+				        				{
+											$value = SampleValue::create([
+					        					"sample_id" => $sample->id,
+					        					"value" => $_value
+					        				]);
+				        				}
+			        				}
+		        				}
+		        			}
+	        			}
+	        		}
         		}
         	}
 

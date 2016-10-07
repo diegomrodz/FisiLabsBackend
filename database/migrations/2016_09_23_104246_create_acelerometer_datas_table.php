@@ -20,6 +20,7 @@ class CreateAcelerometerDatasTable extends Migration
             $table->double('y')->nullable(false);
             $table->double('z')->nullable(false);
             $table->timestamp('mesaured_at')->nullable(false);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

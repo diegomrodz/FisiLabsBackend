@@ -110,6 +110,27 @@ class ExperimentController extends Controller
 		return Experiment::create($form);
 	}
 
+	public function getSubscribe($id) 
+	{
+		$user = Auth::guard('api')->user();
+
+		$subscription = new ExperimentSubscription;
+
+		$subscription->user_id = $user->id;
+		$subscription->experiment_id = $id;
+
+		$subscription->save();
+
+		return $subscription;
+	}
+
+	public function getGroups($id) 
+	{
+		$experiment = Experiment::find($id);
+
+		return $experiment->groups();
+	}
+
 	public function postCreateSample($id, Request $request) 
 	{
 		$user = Auth::guard('api')->user();
